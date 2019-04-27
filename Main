@@ -1,0 +1,59 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.awt.*;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main extends Application {
+    private Stage window;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
+
+        Text welcome = new Text("Welcome! This is a guessing game, so guess a number from 1 to 30.");
+        TextField input = new TextField();
+        Button enterButton = new Button ("Enter");
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(welcome, input, enterButton);
+
+        Scene firstScene = new Scene (vBox, 640, 480);
+
+        Random random = new Random();
+        int numberToGuess = random.nextInt(30);
+        int numberOfTries = 0;
+        Scanner scanner = new Scanner(System.in);
+        int guess;
+        boolean win = false;
+
+        while (win == false) {
+        guess = scanner.nextInt();
+        numberOfTries++;
+
+        if (guess == numberToGuess) {
+            win = true;
+            enterButton.setOnAction (event-> {
+                    systemOut.setText ("You guessed right.");});
+        }
+
+        else if (guess < numberToGuess) {
+            enterButton.setOnAction(event -> {
+                   systemOut.setText ("The number is too low, guess again.");});
+
+        } else if (guess > numberToGuess) {
+            enterButton.setOnAction (event -> {
+                    systemOut.setText ("The number is too high, guess again.");});
+        }
+            window.setScene(firstScene);
+            primaryStage.show();
+
+    }}}
